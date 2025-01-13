@@ -25,8 +25,3 @@ module RequestSpecHelper
     resource.class.name.underscore.to_sym
   end
 end
-
-RSpec.configure do |config|
-  config.include RequestSpecHelper, type: :request
-  config.before(:each, type: :request) { host! "my_app.test" }
-end
