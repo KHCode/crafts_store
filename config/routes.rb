@@ -4,4 +4,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "accounts#home"
+
+  resources :accounts
 end
