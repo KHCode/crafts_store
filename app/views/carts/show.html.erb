@@ -1,0 +1,73 @@
+<div class="container mt-4">
+  <h1>Your Shopping Cart</h1>
+  
+  <% if @cart_items.any? %>
+    <div class="card">
+      <div class="card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @cart_items.each do |item| %>
+              <tr>
+                <td>
+                  <%= link_to item.product.title, product_path(item.product) %>
+                  <small class="text-muted d-block">from <%= link_to item.product.shop.name, shop_path(item.product.shop) %></small>
+                </td>
+                <td>$<%= sprintf('%.2f', item.product.price) %></td>
+                <td>
+                  <%= form_with(model: item, html: { class: 'quantity-form' }) do |form| %>
+                    <div class="input-group" style="width: 120px;">
+                      <%= form.number_field :quantity, min: 1, max: item.product.inventory_count, class: 'form-control form-control-sm' %>
+                      <button type="submit" class="btn btn-sm btn-outline-secondary">
+                        <i class="bi bi-arrow-repeat"></i>
+                      </button>
+                    </div>
+                  <% end %>
+                </td>
+                <td>$<%= sprintf('%.2f', item.total_price) %></td>
+                <td>
+                  <%= link_to cart_item_path(item), method: :delete, data: { confirm: 'Are you sure you want to remove this item?' }, class: 'btn btn-sm btn-outline-danger' do %>
+                    <i class="bi bi-trash"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3" class="text-end"><strong>Cart Total:</strong></td>
+              <td>$<%= sprintf('%.2f', @cart.total) %></td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+        
+        <div class="d-flex justify-content-between mt-4">
+          <%= link_to 'Continue Shopping', products_path, class: 'btn btn-outline-secondary' %>
+          <%= button_to 'Clear Cart', clear_cart_path, method: :delete, data: { confirm: 'Are you sure you want to clear your cart?' }, class: 'btn btn-outline-danger' %>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card mt-4">
+      <div class="card-body text-end">
+        <h5>Order Summary</h5>
+        <p>Total: <strong>$<%= sprintf('%.2f', @cart.total) %></strong></p>
+        <%= link_to 'Proceed to Checkout', '#', class: 'btn btn-success' %>
+      </div>
+    </div>
+  <% else %>
+    <div class="alert alert-info">
+      <p>Your cart is empty.</p>
+      <%= link_to 'Browse Products', products_path, class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

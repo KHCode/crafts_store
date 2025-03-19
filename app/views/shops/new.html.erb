@@ -1,0 +1,15 @@
+<div class="container mt-4">
+  <h1>Open Your Crafts Shop</h1>
+  
+  <div class="card">
+    <div class="card-body">
+      <p class="mb-4">Create your own shop to start selling your handcrafted items to customers around the world.</p>
+      
+      <%= render 'form', shop: @shop %>
+    </div>
+  </div>
+  
+  <div class="mt-3">
+    <%= link_to 'Back to Shops', shops_path, class: 'btn btn-outline-secondary' %>
+  </div>
+</div>

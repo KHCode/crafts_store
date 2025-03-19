@@ -1,0 +1,28 @@
+<%= form_with(model: shop) do |form| %>
+  <% if shop.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(shop.errors.count, "error") %> prohibited this shop from being saved:</h4>
+      <ul>
+        <% shop.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", placeholder: "Your shop name" %>
+    <div class="form-text">Choose a unique name for your crafts shop.</div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, rows: 5, class: "form-control", placeholder: "Tell customers about your shop, your crafts, and your story..." %>
+    <div class="form-text">Describe what makes your handcrafted items special.</div>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>

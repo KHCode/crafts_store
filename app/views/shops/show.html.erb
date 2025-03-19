@@ -1,0 +1,56 @@
+<div class="container mt-4">
+  <div class="row mb-4">
+    <div class="col-md-8">
+      <h1><%= @shop.name %></h1>
+      <p class="text-muted">Crafts by <%= @shop.user.full_name %></p>
+      
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">About This Shop</h5>
+          <p class="card-text"><%= simple_format(@shop.description) %></p>
+        </div>
+      </div>
+      
+      <% if user_signed_in? && @shop.user == current_user %>
+        <div class="mb-4">
+          <%= link_to 'Edit Shop', edit_shop_path(@shop), class: 'btn btn-outline-secondary me-2' %>
+          <%= link_to 'Add New Product', new_product_path, class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  
+  <h2>Products by <%= @shop.name %></h2>
+  
+  <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
+    <% if @products.any? %>
+      <% @products.each do |product| %>
+        <div class="col">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title"><%= product.title %></h5>
+              <p class="card-text"><%= truncate(product.description, length: 150) %></p>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fs-5">$<%= sprintf('%.2f', product.price) %></span>
+                <%= link_to 'View Details', product, class: 'btn btn-sm btn-primary' %>
+              </div>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted"><%= product.inventory_count > 0 ? "#{product.inventory_count} in stock" : "Out of stock" %></small>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="col-12">
+        <div class="alert alert-info">
+          <p>This shop doesn't have any products yet.</p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  
+  <div class="mt-4">
+    <%= link_to 'Back to All Shops', shops_path, class: 'btn btn-outline-secondary' %>
+  </div>
+</div>
