@@ -40,7 +40,9 @@
               <% end %>
               <li><%= link_to "Account Settings", edit_user_registration_path, class: "dropdown-item" %></li>
               <li><hr class="dropdown-divider"></li>
-              <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "dropdown-item" %></li>
+              <li>
+                <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "dropdown-item text-start w-100", form: { data: { turbo: false } } %>
+              </li>
             </ul>
           </li>
         <% else %>
